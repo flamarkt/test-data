@@ -1,0 +1,46 @@
+{
+    "name": "flamarkt/test-data",
+    "description": "Seed test data for Flamarkt.",
+    "keywords": [
+        "flarum",
+        "test",
+        "seed"
+    ],
+    "type": "flarum-extension",
+    "license": "MIT",
+    "require": {
+        "flarum/core": "^1.0",
+        "flamarkt/core": "^0.1.0",
+        "fakerphp/faker": "^1.14"
+    },
+    "authors": [
+        {
+            "name": "Flamarkt",
+            "homepage": "https://flamarkt.org/"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/flamarkt/test-data/issues",
+        "source": "https://github.com/flamarkt/test-data"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flamarkt\\TestData\\": "src/"
+        }
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "Test Data",
+            "category": "flamarkt",
+            "icon": {
+                "name": "fas fa-database",
+                "backgroundColor": "#266a13",
+                "color": "#fff"
+            }
+        },
+        "flamarkt-backoffice": {
+            "showInBackoffice": true,
+            "hideFromAdmin": true
+        }
+    }
+}
