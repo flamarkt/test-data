@@ -127,7 +127,7 @@ class SeedCommand extends Command
 
                 $category->save();
 
-                $categories[] = $category;
+                $categories[] = $category->id;
             }
 
             $this->info('Categories seeded.');
@@ -218,15 +218,22 @@ class SeedCommand extends Command
             $order->save();
 
             for ($j = 0; $j < $faker->numberBetween(1, 20); $j++) {
+                $product = $this->randomProduct();
+
                 $line = new OrderLine();
-                $line->group = 'products';
-                $line->type = 'products';
-                $line->product()->associate($this->randomProduct());
+                $line->group = null;
+                $line->type = 'product';
+                $line->product()->associate($product);
+                $line->price_unit = $product->price;
+                $line->quantity = $faker->numberBetween(1, 10);
+                $line->updateTotal();
 
                 $this->events->dispatch(new ModelSeed($this, $faker, $line));
 
                 $order->lines()->save($line);
             }
+
+            $order->updateMeta()->save();
         }
 
         $this->info('Orders seeded.');
