@@ -9,6 +9,7 @@ Optionally integrates with the following extensions if they are enabled:
 - Flamarkt Categories
 - Flamarkt Taxonomies
 - Flamarkt Library
+- Flamarkt Product Slugs
 
 ## Syntax
 

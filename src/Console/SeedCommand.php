@@ -178,6 +178,10 @@ class SeedCommand extends Command
             $product->updated_at = $faker->optional()->dateTimeBetween($product->created_at);
             $product->hidden_at = $faker->optional(5)->dateTimeBetween($product->created_at);
 
+            if ($manager->isEnabled('flamarkt-product-slugs')) {
+                $product->slug = $faker->unique()->slug;
+            }
+
             if ($manager->isEnabled('flamarkt-library')) {
                 if ($faker->boolean(90)) {
                     $file = resolve(FileRepository::class)->store(new UploadedFile($faker->image(), 0, 0, 'image.png'), User::query()->firstOrFail());
