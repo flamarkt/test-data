@@ -211,6 +211,8 @@ class SeedCommand extends Command
 
         $this->info('Products seeded.');
 
+        $finalQuantitiesEnabled = $manager->isEnabled('flamarkt-final-quantities');
+
         for ($i = 0; $i < $this->option('order-count'); $i++) {
             $order = new Order();
             $order->user()->associate($this->randomUser());
@@ -221,16 +223,27 @@ class SeedCommand extends Command
 
             $order->save();
 
+            $number = 0;
+
             for ($j = 0; $j < $faker->numberBetween(1, 20); $j++) {
                 $product = $this->randomProduct();
 
                 $line = new OrderLine();
+                $line->number = ++$number;
                 $line->group = null;
                 $line->type = 'product';
                 $line->product()->associate($product);
                 $line->price_unit = $product->price;
-                $line->quantity = $faker->numberBetween(1, 10);
+                $line->quantity = $faker->numberBetween($finalQuantitiesEnabled ? 0 : 1, 10);
                 $line->updateTotal();
+
+                if ($finalQuantitiesEnabled) {
+                    $originalDiff = $faker->optional(30)->numberBetween(-3, 3) ?? 0;
+
+                    $line->original_quantity = max(0, $line->quantity + $originalDiff);
+
+                    $line->is_final = $faker->boolean(70);
+                }
 
                 $this->events->dispatch(new ModelSeed($this, $faker, $line));
 

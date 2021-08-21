@@ -10,6 +10,7 @@ Optionally integrates with the following extensions if they are enabled:
 - Flamarkt Taxonomies
 - Flamarkt Library
 - Flamarkt Product Slugs
+- Flamarkt Final Quantities
 
 ## Syntax
 
