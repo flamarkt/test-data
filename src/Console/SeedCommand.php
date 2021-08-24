@@ -2,6 +2,7 @@
 
 namespace Flamarkt\TestData\Console;
 
+use Carbon\Carbon;
 use Faker\Factory;
 use Faker\Generator;
 use Flamarkt\Categories\Category;
@@ -89,6 +90,7 @@ class SeedCommand extends Command
             $user->username = $faker->uuid;
             $user->email = $faker->unique()->email;
             $user->is_email_confirmed = $faker->boolean(90);
+            $user->joined_at = Carbon::now();
 
             if ($manager->isEnabled('flamarkt-identity')) {
                 $user->firstname = $faker->firstName;
