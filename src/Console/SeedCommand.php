@@ -173,6 +173,7 @@ class SeedCommand extends Command
 
         for ($i = 0; $i < $this->option('product-count'); $i++) {
             $product = new Product();
+            $product->uid = $faker->uuid;
             $product->title = $faker->words($faker->numberBetween(1, 10), true);
             $product->description = $faker->optional(0.8)->paragraphs($faker->numberBetween(1, 20), true);
             $product->price = ($faker->numberBetween(1, 100) * 100) + $faker->randomElement([0, 0, 0, 20, 50, 80, 95]);
@@ -217,6 +218,7 @@ class SeedCommand extends Command
 
         for ($i = 0; $i < $this->option('order-count'); $i++) {
             $order = new Order();
+            $order->uid = $faker->uuid;
             $order->user()->associate($this->randomUser());
             $order->price_total = $faker->numberBetween(1, 100) * 100;
             $order->created_at = $faker->dateTimeThisDecade;
@@ -231,6 +233,7 @@ class SeedCommand extends Command
                 $product = $this->randomProduct();
 
                 $line = new OrderLine();
+                $line->uid = $faker->uuid;
                 $line->number = ++$number;
                 $line->group = null;
                 $line->type = 'product';
